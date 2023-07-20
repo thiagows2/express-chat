@@ -2,9 +2,10 @@
   "name": "express-chat",
   "version": "1.0.0",
   "description": "Real time chat",
-  "main": "index.js",
+  "main": "App.js",
   "scripts": {
-    "test": "test"
+    "test": "test",
+    "start": "node App.js"
   },
   "author": "Thiago Marques",
   "license": "ISC",
