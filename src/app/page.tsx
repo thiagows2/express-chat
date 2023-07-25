@@ -4,7 +4,7 @@ export default function Home() {
       <div className="flex flex-col w-60 gap-4 items-center">
         <input
           type="text"
-          placeholder="Digite seu nome..."
+          placeholder="Digite seu nome"
           className="outline-none py-2 px-2 rounded-md text-white bg-black w-full"
         />
         <button className="bg-black px-3 py-2 rounded-md w-full hover:bg-gray-600 transition-all">

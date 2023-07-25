@@ -10,14 +10,13 @@ type UserContextType = {
 export const UserContext = createContext({} as UserContextType)
 
 export function UserProvider({ children }: any) {
-  const user = localStorage.getItem('user-name')
+  const isBrowser = typeof window !== 'undefined'
+  const user = isBrowser ? localStorage.getItem('user-name') : null
   const router = useRouter()
 
   useEffect(() => {
     if (user) {
-      router.push('/chat')
-    } else {
-      router.push('/')
+      router.replace('/chat')
     }
   }, [router, user])
 
