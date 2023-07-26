@@ -17,7 +17,7 @@ export default function Chat() {
   ]
 
   useEffect(() => {
-    // socketInitializer()
+    socketInitializer()
   }, [])
 
   async function socketInitializer() {

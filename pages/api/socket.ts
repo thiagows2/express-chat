@@ -1,11 +1,15 @@
 import { Server } from 'socket.io'
 
-export async function GET(req: Request, res: Response) {
+export default function SocketHandler(req: Request, res: any) {
   if (res.socket.server.io) {
     console.log('Socket is already running')
   } else {
     console.log('Socket is initializing')
-    const io = new Server(res.socket.server)
+    const io = new Server(res.socket.server, {
+      path: '/socket.io',
+      addTrailingSlash: false
+    })
+
     res.socket.server.io = io
 
     io.on('connection', (socket) => {
@@ -16,6 +20,4 @@ export async function GET(req: Request, res: Response) {
   }
 
   res.end()
-
-  return new Response('Hello world!')
 }

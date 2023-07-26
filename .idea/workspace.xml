@@ -5,13 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7307fb1b-8ee7-42cb-b6fa-9451f4159aa7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/app/api/socket/route.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Spinner.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.yarn-integrity" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.yarn-integrity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/api/socket/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/socket.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/chat/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/chat/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/contexts/UserContext.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/contexts/UserContext.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,11 +57,11 @@
       <recent name="$PROJECT_DIR$/src" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/app/api/socket" />
       <recent name="$PROJECT_DIR$/src/app" />
-      <recent name="$PROJECT_DIR$/src/pages" />
-      <recent name="$PROJECT_DIR$/src/app/api/reoute" />
+      <recent name="$PROJECT_DIR$/src/api/teste" />
       <recent name="$PROJECT_DIR$/src" />
+      <recent name="$PROJECT_DIR$/pages/api" />
+      <recent name="$PROJECT_DIR$/src/app/api/socket" />
     </key>
   </component>
   <component name="RubyModuleManagerSettings">
@@ -92,7 +91,7 @@
       <workItem from="1690150431191" duration="596000" />
       <workItem from="1690246768598" duration="1091000" />
       <workItem from="1690249482366" duration="3919000" />
-      <workItem from="1690327610607" duration="4675000" />
+      <workItem from="1690327610607" duration="6094000" />
     </task>
     <servers />
   </component>
