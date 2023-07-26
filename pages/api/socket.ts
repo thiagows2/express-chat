@@ -13,8 +13,8 @@ export default function SocketHandler(req: Request, res: any) {
     res.socket.server.io = io
 
     io.on('connection', (socket) => {
-      socket.on('input-change', (msg) => {
-        socket.broadcast.emit('update-input', msg)
+      socket.on('new-message', (messageObject) => {
+        io.emit('update-messages', messageObject)
       })
     })
   }
