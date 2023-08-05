@@ -7,7 +7,7 @@
   "author": "Thiago Marques",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon index.js"
+    "dev": "nodemon index.js"
   },
   "dependencies": {
     "cors": "^2.8.5",

@@ -2,32 +2,49 @@
 
 import io from 'Socket.IO-client'
 import { useContext, useEffect, useRef, useState } from 'react'
-import { UserContext } from '@/contexts/UserContext'
+import { UserContext, UserType } from '@/contexts/UserContext'
+import useAxios from 'axios-hooks'
 
 const socket = io('http://localhost:4000')
 
-type Message = {
-  user: string
-  message: string
+type MessageType = {
+  id: string
+  user: UserType
+  text: string
+  created_at: string
 }
 
 export default function Chat() {
   const inputRef = useRef<HTMLInputElement>(null)
   const { currentUser } = useContext(UserContext)
 
-  const [messages, setMessages] = useState<Message[]>([])
+  const [messages, setMessages] = useState<MessageType[]>([])
+
+  const [{ data }] = useAxios({
+    url: 'http://localhost:4000/messages'
+  })
+
+  const [, createMessage] = useAxios(
+    {
+      url: 'http://localhost:4000/messages',
+      method: 'POST'
+    },
+    { manual: true }
+  )
 
   useEffect(() => {
     initializeSocket()
     scrollToBottom()
   }, [])
 
-  async function initializeSocket() {
-    socket.on('connect', () => {
-      console.log('connected')
-    })
+  useEffect(() => {
+    if (data) {
+      setMessages(data)
+    }
+  }, [data])
 
-    socket.on('update-messages', (message: Message) => {
+  function initializeSocket() {
+    socket.on('update-messages', (message: MessageType) => {
       setMessages((prev) => [...prev, message])
     })
   }
@@ -37,16 +54,19 @@ export default function Chat() {
     messagesDiv?.scrollTo(0, messagesDiv.scrollHeight)
   }
 
-  function onSend() {
+  async function onSend() {
     if (!inputRef.current?.value) return
 
-    socket.emit('new-message', {
-      user: currentUser,
-      message: inputRef.current.value
+    const { data: messageData } = await createMessage({
+      data: {
+        user_id: currentUser.id,
+        text: inputRef.current.value
+      }
     })
 
-    scrollToBottom()
+    socket.emit('new-message', messageData)
     inputRef.current.value = ''
+    scrollToBottom()
   }
 
   function onEnter({ key }: { key: string }) {
@@ -63,9 +83,9 @@ export default function Chat() {
           className="flex flex-col flex-1 p-4 gap-4 overflow-y-auto"
         >
           {messages.map((message) => (
-            <div key={message.message} className="flex flex-col items-start">
-              <span className="text-gray-500">{message.user}</span>
-              <span className="text-black">{message.message}</span>
+            <div key={message.id} className="flex flex-col items-start">
+              <span className="text-gray-500">{message.user.name}</span>
+              <span className="text-black">{message.text}</span>
             </div>
           ))}
         </div>

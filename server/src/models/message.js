@@ -9,13 +9,17 @@ const messageSchema = new dynamoose.Schema({
     hashKey: true,
     default: uuid.v1()
   },
-  user: {
+  text: {
     type: String,
     required: true
   },
-  message: {
+  user_id: {
     type: String,
     required: true
+  },
+  created_at: {
+    type: String,
+    default: Date.now()
   }
 })
 

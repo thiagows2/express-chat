@@ -5,8 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7307fb1b-8ee7-42cb-b6fa-9451f4159aa7" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/server/src/models/user.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/chat/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/chat/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/contexts/UserContext.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/contexts/UserContext.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/client/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/models/message.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/models/message.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/routes.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,7 +47,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "/Users/thiago/projects/next-chat/src",
+    "last_opened_file_path": "/Users/thiago/projects/next-chat/server/src/models",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.standard": "true",
     "node.js.detected.package.tslint": "true",
@@ -55,6 +64,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/server/src/models" />
       <recent name="$PROJECT_DIR$/src" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -95,6 +105,10 @@
       <workItem from="1690327610607" duration="9008000" />
       <workItem from="1690420195092" duration="1384000" />
       <workItem from="1690497899341" duration="4251000" />
+      <workItem from="1690943313367" duration="325000" />
+      <workItem from="1691065105842" duration="29000" />
+      <workItem from="1691236202394" duration="502000" />
+      <workItem from="1691237953166" duration="6642000" />
     </task>
     <servers />
   </component>

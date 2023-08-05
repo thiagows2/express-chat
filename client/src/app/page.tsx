@@ -3,14 +3,23 @@
 import { UserContext } from '@/contexts/UserContext'
 import { useContext, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import useAxios from 'axios-hooks'
 
 export default function Home() {
   const userRef = useRef<HTMLInputElement>(null)
   const [loading, setLoading] = useState(false)
-  const { setUser } = useContext(UserContext)
+  const { setCurrentUser } = useContext(UserContext)
   const router = useRouter()
 
-  function redirect() {
+  const [, createUser] = useAxios(
+    {
+      url: 'http://localhost:4000/users',
+      method: 'POST'
+    },
+    { manual: true }
+  )
+
+  function redirectToChat() {
     setTimeout(() => {
       setLoading(false)
       router.push('/chat')
@@ -23,13 +32,25 @@ export default function Home() {
     }
   }
 
-  function onContinue() {
+  async function onContinue() {
     const userName = userRef.current?.value || ''
     if (!userName) return
 
-    setUser(userName)
-    setLoading(true)
-    redirect()
+    try {
+      setLoading(true)
+
+      const response = await createUser({
+        data: {
+          name: userName
+        }
+      })
+
+      setCurrentUser(response.data.id)
+      redirectToChat()
+    } catch (error) {
+      setLoading(false)
+      console.log(error)
+    }
   }
 
   return (
