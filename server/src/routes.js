@@ -1,18 +1,32 @@
+const uuid = require('uuid')
 const routes = require('express').Router()
 const Message = require('./models/message.js')
 const User = require('./models/user.js')
+
+function mapMessageResponse(message, user) {
+  return {
+    id: message.id,
+    text: message.text,
+    created_at: message.created_at,
+    user
+  }
+}
 
 routes.post('/messages', async(req, res)=> {
   try {
     const user = await User.get(req.body.user_id)
     if (!user) return res.status(404).json({ error: 'User not found' })
 
-    const message = await Message.create(req.body)
+    const message = await Message.create({
+      id: uuid.v1(),
+      text: req.body.text,
+      user_id: req.body.user_id
+    })
+    const response = mapMessageResponse(message, user)
 
-    return res.json({ ...message, user })
+    return res.json(response)
   } catch (error) {
-    console.error('Error saving message:', error)
-    res.status(500).json({ error: 'Internal Server Error' })
+    res.status(500).json({ error: error })
   }
 })
 
@@ -22,20 +36,25 @@ routes.get('/messages', async(req, res)=> {
     const formattedMessages = await Promise.all(
       messages.map(async (message) => {
         const user = await User.get(message.user_id)
+        return mapMessageResponse(message, user)
+      }
+    ))
 
-        return { ...message, user }
-      })
-    )
-
-    res.json(formattedMessages)
+    const sortedMessages = formattedMessages.sort((a, b) => {
+      return new Date(a.created_at) - new Date(b.created_at)
+    })
+    res.json(sortedMessages)
   } catch (error) {
-    console.error('Error fetching messages:', error)
-    res.status(500).json({ error: 'Internal Server Error' })
+    res.status(500).json({ error: error })
   }
 })
 
 routes.post('/users', async(req, res)=> {
-  const user = await User.create(req.body)
+  const user = await User.create({
+    id: uuid.v1(),
+    name: req.body.name
+  })
+
   return res.json(user)
 })
 
@@ -46,6 +65,8 @@ routes.get('/users', async(req, res)=> {
 
 routes.get('/users/:id', async(req, res)=> {
   const user = await User.get(req.params.id)
+  if (!user) return res.status(404).json({ error: 'User not found' })
+
   return res.json(user)
 })
 

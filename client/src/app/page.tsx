@@ -21,7 +21,6 @@ export default function Home() {
 
   function redirectToChat() {
     setTimeout(() => {
-      setLoading(false)
       router.push('/chat')
     }, 1000)
   }

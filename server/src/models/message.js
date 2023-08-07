@@ -1,5 +1,4 @@
 const dynamoose = require('dynamoose')
-const uuid = require('uuid')
 
 dynamoose.aws.ddb.local()
 
@@ -7,7 +6,7 @@ const messageSchema = new dynamoose.Schema({
   id: {
     type: String,
     hashKey: true,
-    default: uuid.v1()
+    required: true
   },
   text: {
     type: String,
@@ -18,8 +17,8 @@ const messageSchema = new dynamoose.Schema({
     required: true
   },
   created_at: {
-    type: String,
-    default: Date.now()
+    type: Date,
+    default: Date.now
   }
 })
 

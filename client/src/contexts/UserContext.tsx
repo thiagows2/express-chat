@@ -34,15 +34,19 @@ export function UserProvider({ children }: any) {
 
   const handleSetUser = useCallback(async () => {
     if (user && pathname === '/chat') return
-    if (!userId) return router.push('/')
     if (user) return router.push('/chat')
+    if (!userId) return router.push('/')
 
-    const { data } = await fetchUser()
-    if (data) {
+    try {
+      const { data } = await fetchUser()
+
       setUser(data)
       await router.push('/chat')
+    } catch (error) {
+      console.log(error)
+      await router.push('/')
     }
-  }, [user, pathname, userId, router, fetchUser])
+  }, [user, pathname, router, userId, fetchUser])
 
   useEffect(() => {
     handleSetUser()
