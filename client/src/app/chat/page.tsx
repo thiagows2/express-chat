@@ -101,18 +101,26 @@ export default function Chat() {
                   isCurrentUser ? 'items-end' : 'items-start'
                 }`}
               >
-                {showName && (
-                  <span className="text-gray-500">{message.user.name}</span>
+                {showName ? (
+                  <div className="px-4 py-2 rounded-lg bg-gray-200 flex flex-col mt-2">
+                    <span
+                      style={{ color: message.user.color, fontWeight: 'bold' }}
+                    >
+                      {message.user.name}
+                    </span>
+                    <span className="text-gray-800">{message.text}</span>
+                  </div>
+                ) : (
+                  <span
+                    className={`px-4 py-2 rounded-lg ${
+                      isCurrentUser
+                        ? 'bg-green-200 text-gray-800'
+                        : 'bg-gray-200 text-gray-800'
+                    }`}
+                  >
+                    {message.text}
+                  </span>
                 )}
-                <span
-                  className={`px-4 py-2 rounded-lg ${
-                    isCurrentUser
-                      ? 'bg-green-200 text-green-800'
-                      : 'bg-gray-200 text-gray-800'
-                  }`}
-                >
-                  {message.text}
-                </span>
               </div>
             )
           })}

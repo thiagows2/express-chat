@@ -8,6 +8,7 @@ import useAxios from 'axios-hooks'
 export type UserType = {
   id: string
   name: string
+  color: string
 }
 
 type UserContextType = {
