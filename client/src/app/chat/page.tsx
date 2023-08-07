@@ -16,6 +16,8 @@ type MessageType = {
 
 export default function Chat() {
   const inputRef = useRef<HTMLInputElement>(null)
+  const lastUserIdRef = useRef<string | null>(null)
+
   const { currentUser } = useContext(UserContext)
 
   const [messages, setMessages] = useState<MessageType[]>([])
@@ -34,8 +36,11 @@ export default function Chat() {
 
   useEffect(() => {
     initializeSocket()
-    scrollToBottom()
   }, [])
+
+  useEffect(() => {
+    scrollToBottom()
+  }, [messages])
 
   useEffect(() => {
     if (data) {
@@ -80,14 +85,37 @@ export default function Chat() {
       <div className="flex flex-col w-96 h-96 bg-white rounded-md shadow-md">
         <div
           id="messages"
-          className="flex flex-col flex-1 p-4 gap-4 overflow-y-auto"
+          className="flex flex-col flex-1 p-4 gap-0.5 overflow-y-auto"
         >
-          {messages.map((message) => (
-            <div key={message.id} className="flex flex-col items-start">
-              <span className="text-gray-500">{message.user.name}</span>
-              <span className="text-black">{message.text}</span>
-            </div>
-          ))}
+          {messages.map((message) => {
+            const isCurrentUser = currentUser.id === message.user.id
+            const showName =
+              !isCurrentUser && message.user.id !== lastUserIdRef.current
+
+            lastUserIdRef.current = message.user.id
+
+            return (
+              <div
+                key={message.id}
+                className={`flex flex-col ${
+                  isCurrentUser ? 'items-end' : 'items-start'
+                }`}
+              >
+                {showName && (
+                  <span className="text-gray-500">{message.user.name}</span>
+                )}
+                <span
+                  className={`px-4 py-2 rounded-lg ${
+                    isCurrentUser
+                      ? 'bg-green-200 text-green-800'
+                      : 'bg-gray-200 text-gray-800'
+                  }`}
+                >
+                  {message.text}
+                </span>
+              </div>
+            )
+          })}
         </div>
         <div className="flex items-center gap-2 p-4">
           <input

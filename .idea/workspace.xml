@@ -6,21 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="7307fb1b-8ee7-42cb-b6fa-9451f4159aa7" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/contexts/UserContext.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/contexts/UserContext.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/models/message.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/models/message.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/models/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/models/user.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/routes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/chat/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/chat/page.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="ChangesViewManager">
-    <option name="groupingKeys">
-      <option value="directory" />
-    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -104,7 +95,7 @@
       <workItem from="1691065105842" duration="29000" />
       <workItem from="1691236202394" duration="502000" />
       <workItem from="1691237953166" duration="6732000" />
-      <workItem from="1691369537570" duration="2857000" />
+      <workItem from="1691369537570" duration="4365000" />
     </task>
     <servers />
   </component>
