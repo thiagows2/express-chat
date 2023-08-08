@@ -17,6 +17,7 @@ type MessageType = {
 export default function Chat() {
   const inputRef = useRef<HTMLInputElement>(null)
   const lastUserIdRef = useRef<string | null>(null)
+  const [typingUser, setTypingUser] = useState<string | null>(null)
 
   const { currentUser } = useContext(UserContext)
 
@@ -52,6 +53,18 @@ export default function Chat() {
     socket.on('update-messages', (message: MessageType) => {
       setMessages((prev) => [...prev, message])
     })
+
+    socket.on('show-typing', (userName: string) => {
+      setTypingUser(userName)
+
+      setTimeout(() => {
+        setTypingUser(null)
+      }, 2000)
+    })
+  }
+
+  function emitTyping() {
+    socket.emit('typing', currentUser.name)
   }
 
   function scrollToBottom() {
@@ -87,6 +100,11 @@ export default function Chat() {
           id="messages"
           className="flex flex-col flex-1 p-4 gap-0.5 overflow-y-auto"
         >
+          {typingUser && (
+            <span className="text-gray-400 text-sm self-center absolute">
+              {typingUser} está digitando...
+            </span>
+          )}
           {messages.map((message) => {
             const isCurrentUser = currentUser.id === message.user.id
             const showName =
@@ -132,6 +150,7 @@ export default function Chat() {
             placeholder="Envie uma mensagem"
             className="flex-1 outline-none py-2 px-2 rounded-md text-white bg-black"
             onKeyDown={onEnter}
+            onChange={emitTyping}
           />
           <button
             className="bg-black px-3 py-2 rounded-md hover:bg-gray-600 transition-all"

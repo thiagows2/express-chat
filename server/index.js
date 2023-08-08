@@ -19,13 +19,12 @@ const io = require('socket.io')(http, {
 })
 
 io.on('connection', (socket) => {
-  console.log(`⚡: ${socket.id} user just connected!`)
-  socket.on('disconnect', () => {
-    console.log('🔥: A user disconnected')
-  })
-
   socket.on('new-message', (messageObject) => {
     io.emit('update-messages', messageObject)
+  })
+
+  socket.on('typing', (userName) => {
+    socket.broadcast.emit('show-typing', userName)
   })
 })
 
