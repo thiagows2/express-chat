@@ -1,6 +1,7 @@
 const dynamoose = require('dynamoose')
+const ddb = require('../dynamodb')
 
-dynamoose.aws.ddb.local()
+dynamoose.aws.ddb.set(ddb)
 
 const messageSchema = new dynamoose.Schema({
   id: {

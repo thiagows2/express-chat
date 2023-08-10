@@ -7,7 +7,7 @@ import { UserProvider } from '@/contexts/UserContext'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Next Chat',
+  title: 'Express Chat',
   description: 'Real time chat'
 }
 
