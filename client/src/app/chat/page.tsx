@@ -5,7 +5,7 @@ import { useContext, useEffect, useRef, useState } from 'react'
 import { UserContext, UserType } from '@/contexts/UserContext'
 import useAxios from 'axios-hooks'
 
-const socket = io('http://localhost:4000')
+const socket = io('http://54.158.169.6:4000/')
 
 type MessageType = {
   id: string
@@ -24,12 +24,12 @@ export default function Chat() {
   const [messages, setMessages] = useState<MessageType[]>([])
 
   const [{ data }] = useAxios({
-    url: 'http://localhost:4000/messages'
+    url: 'http://54.158.169.6:4000/messages'
   })
 
   const [, createMessage] = useAxios(
     {
-      url: 'http://localhost:4000/messages',
+      url: 'http://54.158.169.6:4000/messages',
       method: 'POST'
     },
     { manual: true }

@@ -13,7 +13,7 @@ export default function Home() {
 
   const [, createUser] = useAxios(
     {
-      url: 'http://localhost:4000/users',
+      url: 'http://54.158.169.6:4000/users',
       method: 'POST'
     },
     { manual: true }

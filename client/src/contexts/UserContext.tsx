@@ -28,7 +28,7 @@ export function UserProvider({ children }: any) {
 
   const [{ loading: loadingUser }, fetchUser] = useAxios(
     {
-      url: `http://localhost:4000/users/${userId}`
+      url: `http://54.158.169.6:4000/users/${userId}`
     },
     { manual: true }
   )
