@@ -1,6 +1,6 @@
 'use client'
 
-import io from 'Socket.IO-client'
+import { io } from 'socket.io-client'
 import { useContext, useEffect, useRef, useState } from 'react'
 import { UserContext, UserType } from '@/contexts/UserContext'
 import useAxios from 'axios-hooks'
