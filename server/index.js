@@ -4,8 +4,7 @@ const morgan = require('morgan')
 const cors = require('cors')
 const routes = require('./src/routes')
 const app = express()
-const http = require('http').Server(app)
-const CLIENT_PORT = 3000
+const server = require('http').Server(app)
 const SERVER_PORT = 4000
 
 app.use(cors())
@@ -13,9 +12,9 @@ app.use(morgan('dev'))
 app.use(express.json())
 app.use(routes)
 
-const io = require('socket.io')(http, {
+const io = require('socket.io')(server, {
   cors: {
-    origin: `http://localhost:${CLIENT_PORT}`
+    origin: ['http://localhost:3000', 'https://expresschat.vercel.app']
   }
 })
 
@@ -29,6 +28,6 @@ io.on('connection', (socket) => {
   })
 })
 
-http.listen(SERVER_PORT, () => {
+server.listen(SERVER_PORT, () => {
   console.log(`Server listening on ${SERVER_PORT}`)
 })
