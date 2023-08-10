@@ -1,12 +1,19 @@
 'use client'
 
-import { createContext, useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { createContext, useCallback, useEffect, useState } from 'react'
+import { useRouter, usePathname } from 'next/navigation'
 import { Spinner } from '@/components/Spinner'
+import useAxios from 'axios-hooks'
+
+export type UserType = {
+  id: string
+  name: string
+  color: string
+}
 
 type UserContextType = {
-  currentUser: string | null
-  setUser: (name: string) => void
+  currentUser: UserType
+  setCurrentUser: (id: string) => void
 }
 
 export const UserContext = createContext({} as UserContextType)
@@ -14,37 +21,55 @@ export const UserContext = createContext({} as UserContextType)
 export function UserProvider({ children }: any) {
   const [loading, setLoading] = useState(true)
   const isBrowser = typeof window !== 'undefined'
-  const user = isBrowser ? localStorage.getItem('user-name') : null
+  const [user, setUser] = useState<UserType | null>(null)
+  const userId = isBrowser ? localStorage.getItem('current-user-id') : null
   const router = useRouter()
+  const pathname = usePathname()
+
+  const [{ loading: loadingUser }, fetchUser] = useAxios(
+    {
+      url: `http://localhost:4000/users/${userId}`
+    },
+    { manual: true }
+  )
+
+  const handleSetUser = useCallback(async () => {
+    if (user && pathname === '/chat') return
+    if (user) return router.push('/chat')
+    if (!userId) return router.push('/')
+
+    try {
+      const { data } = await fetchUser()
+
+      setUser(data)
+      await router.push('/chat')
+    } catch (error) {
+      console.log(error)
+      await router.push('/')
+    }
+  }, [user, pathname, router, userId, fetchUser])
 
   useEffect(() => {
-    handleSetMounted()
+    handleSetUser()
 
-    if (user) {
-      router.replace('/chat')
-    } else {
-      router.replace('/')
-    }
-  }, [router, user])
-
-  function handleSetMounted() {
     setTimeout(() => {
       setLoading(false)
     }, 1000)
-  }
+  }, [handleSetUser])
 
-  function setUser(name: string) {
+  function setCurrentUser(id: string) {
     if (isBrowser) {
-      localStorage.setItem('user-name', name)
+      localStorage.setItem('current-user-id', id)
     }
   }
 
-  if (loading) {
+  if (loading || loadingUser) {
     return <Spinner />
   }
 
   return (
-    <UserContext.Provider value={{ currentUser: user, setUser }}>
+    // @ts-ignore
+    <UserContext.Provider value={{ currentUser: user, setCurrentUser }}>
       {children}
     </UserContext.Provider>
   )
