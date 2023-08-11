@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "node_modules/.bin/next dev",
+    "dev": "node_modules/.bin/next dev API_URL=http://localhost:3000",
     "build": "node_modules/.bin/next build",
-    "start": "node_modules/.bin/next start",
+    "start": "node_modules/.bin/next start API_URL=https://next-chat-psi.vercel.app",
     "lint": "node_modules/.bin/next lint"
   },
   "dependencies": {
