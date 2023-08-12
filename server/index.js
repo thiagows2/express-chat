@@ -14,7 +14,7 @@ app.use(routes)
 
 const io = require('socket.io')(server, {
   cors: {
-    origin: ['http://localhost:3000', 'https://expresschat.vercel.app']
+    origin: ['http://localhost:3000', 'https://chat.thiagows.dev']
   }
 })
 
