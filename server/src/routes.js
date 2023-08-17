@@ -2,6 +2,8 @@ const uuid = require('uuid')
 const routes = require('express').Router()
 const Message = require('./models/message.js')
 const User = require('./models/user.js')
+const s3Client = require('./services/s3Client.js')
+const randomColor = require('./services/randomColor.js')
 
 function mapMessageResponse(message, user) {
   return {
@@ -10,24 +12,6 @@ function mapMessageResponse(message, user) {
     created_at: message.created_at,
     user
   }
-}
-
-function getRandomColor() {
-  const colors = [
-    '#34B7F1',
-    '#FF5733',
-    '#9C27B0',
-    '#00C851',
-    '#FF1A75',
-    '#FF1A1A',
-    '#E040FB',
-    '#4CAF50',
-    '#FF6D00',
-    '#FF4081',
-    '#3F729B',
-  ]
-
-  return colors[Math.floor(Math.random() * colors.length)]
 }
 
 routes.post('/messages', async(req, res)=> {
@@ -68,10 +52,15 @@ routes.get('/messages', async(req, res)=> {
 })
 
 routes.post('/users', async(req, res)=> {
+  const isUpload = req.body.avatar.startsWith('data:image')
+  const s3Function = isUpload ? s3Client.uploadFile : s3Client.getFileUrl
+  const avatarUrl = await s3Function(req.body.avatar)
+
   const user = await User.create({
     id: uuid.v1(),
     name: req.body.name,
-    color: getRandomColor()
+    color: randomColor(),
+    avatar: avatarUrl
   })
 
   return res.json(user)

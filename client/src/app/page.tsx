@@ -3,17 +3,23 @@
 import { UserContext } from '@/contexts/UserContext'
 import { useContext, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { configAxios } from '@/utils/configAxios'
+import AvatarModal from '@/components/AvatarModal'
 import useAxios from 'axios-hooks'
+import { IoMdCamera } from 'react-icons/io'
 
 export default function Home() {
-  const userRef = useRef<HTMLInputElement>(null)
+  configAxios()
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [selectedAvatar, setSelectedAvatar] = useState('')
   const [loading, setLoading] = useState(false)
+  const userRef = useRef<HTMLInputElement>(null)
   const { setCurrentUser } = useContext(UserContext)
   const router = useRouter()
 
   const [, createUser] = useAxios(
     {
-      url: 'http://54.158.169.6:4000/users',
+      url: '/users',
       method: 'POST'
     },
     { manual: true }
@@ -31,6 +37,19 @@ export default function Home() {
     }
   }
 
+  function openAvatarModal() {
+    setIsModalOpen(true)
+  }
+
+  function closeAvatarModal() {
+    setIsModalOpen(false)
+  }
+
+  function handleAvatarSelect(avatar: string, isUploading: boolean) {
+    const path = isUploading ? avatar : `avatars/${avatar}`
+    setSelectedAvatar(path)
+  }
+
   async function onContinue() {
     const userName = userRef.current?.value || ''
     if (!userName) return
@@ -40,7 +59,8 @@ export default function Home() {
 
       const response = await createUser({
         data: {
-          name: userName
+          name: userName,
+          avatar: selectedAvatar || 'default.png'
         }
       })
 
@@ -54,7 +74,37 @@ export default function Home() {
 
   return (
     <main className="flex items-center p-4 mx-auto min-h-screen justify-center ">
+      <AvatarModal
+        isOpen={isModalOpen}
+        onClose={closeAvatarModal}
+        onSelect={handleAvatarSelect}
+      />
       <div className="flex flex-col w-60 gap-4 items-center">
+        <div
+          className={`relative w-24 h-24 mb-4 cursor-pointer ${
+            selectedAvatar && 'flex items-center justify-center mb-0'
+          }`}
+          onClick={openAvatarModal}
+        >
+          {selectedAvatar ? (
+            <img
+              className="rounded-full cursor-pointer"
+              src={selectedAvatar}
+              alt="Avatar"
+            />
+          ) : (
+            <>
+              <div className="w-8 h-8 bg-black rounded-full flex items-center justify-center absolute border-2 border-[#3D3E51] right-[-4px]">
+                <IoMdCamera />
+              </div>
+              <img
+                className="rounded-full cursor-pointer"
+                src="/avatars/default.png"
+                alt="Avatar"
+              />
+            </>
+          )}
+        </div>
         <input
           ref={userRef}
           type="text"
