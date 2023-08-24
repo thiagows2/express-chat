@@ -3,9 +3,10 @@
 import { io } from 'socket.io-client'
 import { useContext, useEffect, useRef, useState } from 'react'
 import { UserContext, UserType } from '@/contexts/UserContext'
+import { configAxios } from '@/utils/configAxios'
 import useAxios from 'axios-hooks'
 
-const socket = io('http://54.158.169.6:4000/')
+const socket = io('https://apichat.thiagows.dev')
 
 type MessageType = {
   id: string
@@ -15,6 +16,7 @@ type MessageType = {
 }
 
 export default function Chat() {
+  configAxios()
   const inputRef = useRef<HTMLInputElement>(null)
   const lastUserIdRef = useRef<string | null>(null)
   const [typingUser, setTypingUser] = useState<string | null>(null)
@@ -24,12 +26,12 @@ export default function Chat() {
   const [messages, setMessages] = useState<MessageType[]>([])
 
   const [{ data }] = useAxios({
-    url: 'http://54.158.169.6:4000/messages'
+    url: '/messages'
   })
 
   const [, createMessage] = useAxios(
     {
-      url: 'http://54.158.169.6:4000/messages',
+      url: '/messages',
       method: 'POST'
     },
     { manual: true }

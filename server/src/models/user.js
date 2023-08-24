@@ -16,6 +16,10 @@ const userSchema = new dynamoose.Schema({
   color: {
     type: String,
     required: true
+  },
+  avatar: {
+    type: String,
+    required: true
   }
 })
 
