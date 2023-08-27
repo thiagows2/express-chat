@@ -129,7 +129,7 @@ export default function Chat() {
                 }`}
               >
                 {showName ? (
-                  <div className="px-4 py-2 rounded-lg bg-gray-200 flex flex-col mt-2 relative">
+                  <div className="px-4 py-2 rounded-lg bg-gray-200 flex flex-col mt-2 relative max-w-[75%]">
                     {!isCurrentUser && (
                       <img
                         src={message.user.avatar}
@@ -143,7 +143,7 @@ export default function Chat() {
                     >
                       {message.user.name}
                     </span>
-                    <span className="text-gray-800 text-sm break-words max-w-[75%]">
+                    <span className="text-gray-800 text-sm break-words">
                       {message.text}
                     </span>
                   </div>
