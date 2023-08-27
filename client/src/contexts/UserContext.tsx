@@ -37,18 +37,18 @@ export function UserProvider({ children }: any) {
   )
 
   const handleSetUser = useCallback(async () => {
-    if (user && pathname === '/chat') return
-    if (user) return router.push('/chat')
-    if (!userId) return router.push('/')
+    if (user && pathname === '/') return
+    if (user) return router.push('/')
+    if (!userId) return router.push('/login')
 
     try {
       const { data } = await fetchUser()
 
       setUser(data)
-      await router.push('/chat')
+      await router.push('/')
     } catch (error) {
       console.log(error)
-      await router.push('/')
+      await router.push('/login')
     }
   }, [user, pathname, router, userId, fetchUser])
 
