@@ -12,6 +12,7 @@ export default function Home() {
   configAxios()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedAvatar, setSelectedAvatar] = useState('')
+  const [isUploading, setIsUploading] = useState(false)
   const [loading, setLoading] = useState(false)
   const userRef = useRef<HTMLInputElement>(null)
   const { setCurrentUser } = useContext(UserContext)
@@ -46,8 +47,8 @@ export default function Home() {
   }
 
   function handleAvatarSelect(avatar: string, isUploading: boolean) {
-    const path = isUploading ? avatar : `avatars/${avatar}`
-    setSelectedAvatar(path)
+    setIsUploading(isUploading)
+    setSelectedAvatar(avatar)
   }
 
   async function onContinue() {
@@ -89,7 +90,7 @@ export default function Home() {
           {selectedAvatar ? (
             <img
               className="rounded-full cursor-pointer"
-              src={selectedAvatar}
+              src={isUploading ? selectedAvatar : `/avatars/${selectedAvatar}`}
               alt="Avatar"
             />
           ) : (

@@ -25,11 +25,14 @@ async function getFileUrl(fileKey) {
 
   return new Promise((resolve, reject) => {
     s3.getSignedUrl('getObject', params, (err, url) => {
-      if (err) reject(err)
-      else resolve(url)
+      if (err) {
+        reject(err)
+      } else {
+        const unsignedUrl = url.split('?')[0]
+        resolve(unsignedUrl)
+      }
     })
   })
 }
-
 
 module.exports = { uploadFile, getFileUrl }

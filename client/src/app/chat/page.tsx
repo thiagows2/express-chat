@@ -20,12 +20,11 @@ export default function Chat() {
   const inputRef = useRef<HTMLInputElement>(null)
   const lastUserIdRef = useRef<string | null>(null)
   const [typingUser, setTypingUser] = useState<string | null>(null)
+  const [messages, setMessages] = useState<MessageType[]>([])
 
   const { currentUser } = useContext(UserContext)
 
-  const [messages, setMessages] = useState<MessageType[]>([])
-
-  const [{ data }] = useAxios({
+  const [{ error, data }] = useAxios({
     url: '/messages'
   })
 
@@ -95,12 +94,20 @@ export default function Chat() {
     }
   }
 
+  if (error) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen">
+        <span className="text-red-500 text-xl">{error.message}</span>
+      </div>
+    )
+  }
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
-      <div className="flex flex-col w-96 h-96 bg-white rounded-md shadow-md">
+    <div className="flex flex-col items-center justify-center min-h-screen px-8">
+      <div className="flex flex-col min-w-[320px] max-w-[460px] w-full h-[520px] bg-white rounded-md shadow-md">
         <div
           id="messages"
-          className="flex flex-col flex-1 p-4 gap-0.5 overflow-y-auto"
+          className="flex flex-col flex-1 py-4 pl-8 pr-4 gap-0.5 overflow-y-auto"
         >
           {typingUser && (
             <span className="text-gray-400 text-sm self-center absolute">
@@ -122,20 +129,28 @@ export default function Chat() {
                 }`}
               >
                 {showName ? (
-                  <div className="px-4 py-2 rounded-lg bg-gray-200 flex flex-col mt-2">
+                  <div className="px-4 py-2 rounded-lg bg-gray-200 flex flex-col mt-2 relative">
+                    {!isCurrentUser && (
+                      <img
+                        src={message.user.avatar}
+                        alt="user-avatar"
+                        className="w-6 h-6 rounded-full absolute top-0 left-[-26px] bg-gray-200"
+                      />
+                    )}
                     <span
-                      style={{ color: message.user.color, fontWeight: 'bold' }}
+                      className="font-bold text-sm"
+                      style={{ color: message.user.color }}
                     >
                       {message.user.name}
                     </span>
-                    <span className="text-gray-800">{message.text}</span>
+                    <span className="text-gray-800 text-sm break-words max-w-[75%]">
+                      {message.text}
+                    </span>
                   </div>
                 ) : (
                   <span
-                    className={`px-4 py-2 rounded-lg ${
-                      isCurrentUser
-                        ? 'bg-green-200 text-gray-800'
-                        : 'bg-gray-200 text-gray-800'
+                    className={`px-4 py-2 rounded-lg text-sm break-words max-w-[75%] text-gray-800 ${
+                      isCurrentUser ? 'bg-green-200' : 'bg-gray-200'
                     }`}
                   >
                     {message.text}

@@ -4,11 +4,13 @@ import { createContext, useCallback, useEffect, useState } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
 import { Spinner } from '@/components/Spinner'
 import useAxios from 'axios-hooks'
+import { configAxios } from '@/utils/configAxios'
 
 export type UserType = {
   id: string
   name: string
   color: string
+  avatar: string
 }
 
 type UserContextType = {
@@ -19,6 +21,7 @@ type UserContextType = {
 export const UserContext = createContext({} as UserContextType)
 
 export function UserProvider({ children }: any) {
+  configAxios()
   const [loading, setLoading] = useState(true)
   const isBrowser = typeof window !== 'undefined'
   const [user, setUser] = useState<UserType | null>(null)

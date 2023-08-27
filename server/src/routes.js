@@ -52,30 +52,42 @@ routes.get('/messages', async(req, res)=> {
 })
 
 routes.post('/users', async(req, res)=> {
-  const isUpload = req.body.avatar.startsWith('data:image')
-  const s3Function = isUpload ? s3Client.uploadFile : s3Client.getFileUrl
-  const avatarUrl = await s3Function(req.body.avatar)
+  try {
+    const isUpload = req.body.avatar.startsWith('data:image')
+    const s3Function = isUpload ? s3Client.uploadFile : s3Client.getFileUrl
+    const avatarUrl = await s3Function(req.body.avatar)
 
-  const user = await User.create({
-    id: uuid.v1(),
-    name: req.body.name,
-    color: randomColor(),
-    avatar: avatarUrl
-  })
+    const user = await User.create({
+      id: uuid.v1(),
+      name: req.body.name,
+      color: randomColor(),
+      avatar: avatarUrl
+    })
 
-  return res.json(user)
+    return res.json(user)
+  } catch (error) {
+    res.status(500).json({ error: error })
+  }
 })
 
 routes.get('/users', async(req, res)=> {
-  const users = await User.scan().exec()
-  return res.json(users)
+  try {
+    const users = await User.scan().exec()
+    return res.json(users)
+  } catch (error) {
+    res.status(500).json({ error: error })
+  }
 })
 
 routes.get('/users/:id', async(req, res)=> {
-  const user = await User.get(req.params.id)
-  if (!user) return res.status(404).json({ error: 'User not found' })
+  try {
+    const user = await User.get(req.params.id)
+    if (!user) return res.status(404).json({ error: 'User not found' })
 
-  return res.json(user)
+    return res.json(user)
+  } catch (error) {
+    res.status(500).json({ error: error })
+  }
 })
 
 module.exports = routes

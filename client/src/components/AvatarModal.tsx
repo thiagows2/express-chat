@@ -77,7 +77,6 @@ export default function AvatarModal({
       : selectedAvatar
     if (!currentAvatar) return
 
-    console.log(currentAvatar)
     onSelect(currentAvatar, isUploading)
     onClose()
     setSelectedAvatar('')
