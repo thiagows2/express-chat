@@ -53,7 +53,9 @@ export default function Login() {
 
   async function onContinue() {
     const userName = userRef.current?.value || ''
-    if (!userName) return
+    const avatar = selectedAvatar
+    if (!userName) return userRef.current?.focus()
+    if (!avatar) return openAvatarModal()
 
     try {
       setLoading(true)
@@ -61,7 +63,7 @@ export default function Login() {
       const response = await createUser({
         data: {
           name: userName,
-          avatar: selectedAvatar || 'default.png'
+          avatar: selectedAvatar
         }
       })
 
